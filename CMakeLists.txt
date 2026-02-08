@@ -57,15 +57,21 @@ endif()
 
 add_compile_options(-DIMGUI_IMPL_OPENGL_LOADER_CUSTOM)
 
-add_executable(OpenGL_project src/main.cpp)
+add_executable(OpenGL_project src/main.cpp
+                              shared_sources/glad/glad.h
+                              shared_sources/glad/glad.c
+                              shared_sources/glad/KHR/khrplatform.h)
 target_link_libraries(OpenGL_project PRIVATE ${COMMON_DEPENDENCIES})
-target_include_directories(OpenGL_project PRIVATE shared_sources src)
+target_include_directories(OpenGL_project PRIVATE shared_sources shared_sources/glad src)
 set_target_properties(OpenGL_project PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 set_directory_properties(PROPERTIES VS_STARTUP_PROJECT OpenGL_project)
 set_target_properties(OpenGL_project PROPERTIES
                       XCODE_GENERATE_SCHEME TRUE
                       XCODE_SCHEME_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
-source_group("Assignment" FILES src/main.cpp)
+source_group("OpenGLProject" FILES src/main.cpp)
+source_group("Shared infrastructure" FILES shared_sources/glad/glad.h
+                                           shared_sources/glad/glad.c
+                                           shared_sources/glad/KHR/khrplatform.h)
 # source_group("Shared infrastructure" FILES shared_sources/imgui_impl_opengl3.cpp
 #                                            shared_sources/imgui_impl_opengl3.h
 #                                            shared_sources/glad/gl_core_33.h
